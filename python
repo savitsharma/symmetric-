@@ -1,0 +1,23 @@
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        if root:
+            queue, depth = [(root, 0)], 0
+            while queue:
+               
+                tmpq = []
+                for node, pos in queue:
+                    if node.left: tmpq.append((node.left, pos*2))
+                    if node.right: tmpq.append((node.right, pos*2 +1))
+                    
+               
+                while depth and queue:
+                    try:
+                        (l, lpos), (r, rpos) = queue.pop(0), queue.pop()
+                        assert (l.val == r.val) and (lpos == (1 << depth) - 1 - rpos)
+                    except:
+                        return False
+
+               
+                queue, depth = tmpq, depth + 1
+        
+        return True
